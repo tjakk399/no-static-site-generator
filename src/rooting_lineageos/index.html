@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="referrer" content="no-referrer">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="David Kaumanns, Ph.D." />
+        <title>kaumanns.io</title>
+		<style type="text/css">
+			body {
+				color:       #444;
+				font-size:   14px;
+				line-height: 1.6;
+				margin:      0px auto;
+				max-width:   650px;
+				padding:     0 10px
+        font-family: Verdana, Geneva, sans-serif;
+			}
+			h1,h2,h3 {
+				line-height: 1.2;
+			}
+      article,footer {
+        margin: 40px 10px 40px 10px;
+      }
+      a {
+        color:           SteelBlue;
+        text-decoration: none;
+      }
+      a:hover {
+        color: Blue;
+      }
+      pre {
+        background:    #002b36;
+        border-radius: 8px;
+        color:         #fdf6e3;
+        counter-reset: line;
+        display:       block;
+        overflow:      auto;
+        padding:       5px;
+        tab-size:      2;
+      }
+      figure figcaption {
+        text-align: center
+      }
+      figure img {
+        display:      block;
+        margin-left:  auto;
+        margin-right: auto;
+        max-width:    400px;
+        width:        75%;
+      }
+      .tag {
+        background:    SteelBlue;
+        border-radius: 4px;
+        color:         white;
+        padding:       2px;
+      }
+      .center {
+        text-align: center
+      }
+      .bigger {
+        font-size: larger;
+      }
+		</style>
+	</head>
+	<body>
+        <main>
+            <nav class="center">
+                <p class="bigger">
+                  david kaumanns.io
+                </p>
+                <p class="logo">
+                  <a href="/">
+                      <img alt="Logo" style="border-width:0" src="/logo.png" />
+                  </a>
+                </p>
+                <!-- <p> -->
+                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+                <!-- </p> -->
+            </nav>
+            <article>
+    <header>
+                <h1 class="title center">
+            <a href=".">Rooting Lineage OS 18.1 on Fairphone 2 with Magisk</a>
+        </h1>
+                        <p class="center">
+                        <span class="tag">Linux</span>        </p>
+                        <p class="last_update center">
+            Last update: <time>05.09.2021</time>
+        </p>
+            </header>
+    <p>Rooting Lineage OS with <em>Magisk</em> is necessary if you want to use privacy power apps such as <em>AdAway</em> (host blocker) and <em>AFWall+</em> (firewall).</p>
+    <p>It is also slightly weird, which is why I want to summarize the official <a href="https://topjohnwu.github.io/Magisk/install.html"><em>Magisk</em> installation instructions</a>:</p>
+    <ol type="1">
+    <li><p>Install the <em>Magisk</em> app just like a normal app, e.g. via <em>F-Droid</em>. No flashing necessary.</p></li>
+    <li><p>Open <em>Magisk</em> and check whether your device has <strong>ramdisk</strong> in the boot partition (via “Ramdisk” info).</p></li>
+    </ol>
+    <p>Ramdisk availability informs whether to continue with <code>boot.img</code> or <code>recovery.img</code>. My <em>Fairphone 2</em> has ramdisk, so I will assume it below.</p>
+    <p><strong>Important</strong>: your device may not have ramdisk, so please check the original installation instructions.</p>
+    <ol start="3" type="1">
+    <li><p>Download the zip of your current <a href="https://download.lineageos.org/">Lineage OS</a> version to your host machine and extract it. You should find a <strong><code>boot.img</code></strong> file.</p></li>
+    <li><p>Copy the <code>boot.img</code> file to your device:</p></li>
+    </ol>
+    <pre><code>adb push boot.img /sdcard/Download/</code></pre>
+    <ol start="5" type="1">
+    <li><p>Open <em>Magisk</em> and patch the <code>boot.img</code> file via the install dialog.</p></li>
+    <li><p>Copy the <strong>patched <code>boot.img</code></strong> back to the host machine, like this:</p></li>
+    </ol>
+    <pre><code>pull /sdcard/Download/magisk_patched-23000_iXpIR.img</code></pre>
+    <ol start="7" type="1">
+    <li>Reboot the device into fastboot mode:</li>
+    </ol>
+    <pre><code>adb reboot bootloader</code></pre>
+    <ol start="8" type="1">
+    <li>Flash the patched <code>boot.img</code> onto the device:</li>
+    </ol>
+    <pre><code>sudo fastboot flash boot magisk_patched-23000_iXpIR.img</code></pre>
+    <ol start="9" type="1">
+    <li>Reboot the device:</li>
+    </ol>
+    <pre><code>sudo fastboot reboot</code></pre>
+    <p>Your device should now be rooted.</p>
+    <p><strong>Note</strong>: In <em>Magisk</em>, tap the shield icon in the bottom row to manage superuser permissions for apps.</p>
+</article>
+<hr>
+<hr>
+
+            <footer>
+                <small>
+                    <p class="author">
+                    By David Kaumanns, Ph.D.
+                    </p>
+                    <p>
+                        Throw me a wrench via:
+                        <ul>
+                            <li>
+                                Email: david [ätt] kaumanns.io
+                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+                            </li>
+                            <li>
+                                Matrix: @mael:hackbrettl.de
+                            </li>
+                            <li>
+                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+                            </li>
+                        </ul>
+                    </p>
+                    <hr>
+                    <p>
+                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+                        and is served by a Raspberry Pi 3.
+                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+                    </p>
+                    <p>
+                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+                    </p>
+                    <p>
+                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+                        <br />
+                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+                        </a>
+                    <p>
+                </small>
+            </footer>
+        </main>
+	</body>
+</html>

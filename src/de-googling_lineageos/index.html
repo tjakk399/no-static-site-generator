@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="referrer" content="no-referrer">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="David Kaumanns, Ph.D." />
+        <title>kaumanns.io</title>
+		<style type="text/css">
+			body {
+				color:       #444;
+				font-size:   14px;
+				line-height: 1.6;
+				margin:      0px auto;
+				max-width:   650px;
+				padding:     0 10px
+        font-family: Verdana, Geneva, sans-serif;
+			}
+			h1,h2,h3 {
+				line-height: 1.2;
+			}
+      article,footer {
+        margin: 40px 10px 40px 10px;
+      }
+      a {
+        color:           SteelBlue;
+        text-decoration: none;
+      }
+      a:hover {
+        color: Blue;
+      }
+      pre {
+        background:    #002b36;
+        border-radius: 8px;
+        color:         #fdf6e3;
+        counter-reset: line;
+        display:       block;
+        overflow:      auto;
+        padding:       5px;
+        tab-size:      2;
+      }
+      figure figcaption {
+        text-align: center
+      }
+      figure img {
+        display:      block;
+        margin-left:  auto;
+        margin-right: auto;
+        max-width:    400px;
+        width:        75%;
+      }
+      .tag {
+        background:    SteelBlue;
+        border-radius: 4px;
+        color:         white;
+        padding:       2px;
+      }
+      .center {
+        text-align: center
+      }
+      .bigger {
+        font-size: larger;
+      }
+		</style>
+	</head>
+	<body>
+        <main>
+            <nav class="center">
+                <p class="bigger">
+                  david kaumanns.io
+                </p>
+                <p class="logo">
+                  <a href="/">
+                      <img alt="Logo" style="border-width:0" src="/logo.png" />
+                  </a>
+                </p>
+                <!-- <p> -->
+                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+                <!-- </p> -->
+            </nav>
+            <article>
+    <header>
+                <h1 class="title center">
+            <a href=".">De-Googling LineageOS 18.1</a>
+        </h1>
+                        <p class="center">
+                        <span class="tag">Privacy</span>        </p>
+                        <p class="last_update center">
+            Last update: <time>09.09.2021</time>
+        </p>
+            </header>
+    <figure>
+    <img src="lineage_desktop.@monochrome.png" alt="A LineageOS desktop" /><figcaption aria-hidden="true">A LineageOS desktop</figcaption>
+    </figure>
+    <h2 id="introduction">Introduction</h2>
+    <p><a href="https://lineageos.org/">LineageOS</a> is an open-source derivative of Google’s Android Open Source Project (AOSP). It is pretty lean and comes out of the box without all the crapware of the big smartphone vendors, which means: <em>almost</em> no tracking by third parties.</p>
+    <p>Google is still nosing around, though, so it needs a few tweaks before you can call it a true private OS. This is a comprehensive step-by-step guide to do so. Part of it is an English translation of the excellent <a href="https://www.kuketz-blog.de/android-ohne-google-take-back-control-teil1/">Kuketz-Blog</a> (German).</p>
+    <h3 id="content">Content</h3>
+    <ol type="1">
+    <li><a href="system_settings">High-Level System Settings</a></li>
+    </ol>
+    <ul>
+    <li>Change system browser defaults</li>
+    <li>Disable phone number lookup</li>
+    <li>Change the Domain Name Server (DNS)</li>
+    </ul>
+    <ol start="2" type="1">
+    <li>Helpful apps</li>
+    </ol>
+    <ul>
+    <li><a href="host_blocker">Domain Name Blocking with <em>AdAway</em></a></li>
+    <li><a href="firewall">Firewall with <em>AFWall+</em></a></li>
+    </ul>
+    <ol start="3" type="1">
+    <li>Low-level system settings</li>
+    </ol>
+    <ul>
+    <li><a href="captive_portal_server">Captive Portal Server</a></li>
+    <li><a href="ntp_server">Network Time Protocol (NTP) Server</a></li>
+    <li><a href="supl_agps">SUPL for A-GPS</a></li>
+    <li>Replace AOSP Chromium Webview engine with <em>Bromite</em> (TODO)</li>
+    </ul>
+    <h3 id="requirements">Requirements</h3>
+    <p>… if you want to follow all steps:</p>
+    <ul>
+    <li><a href="https://lineageos.org/">LineageOS 18.1</a> installed</li>
+    <li>OS rooted with <a href="https://github.com/topjohnwu/Magisk">Magisk</a>, e.g. on a <a href="/rooting_lineageos">Fairphone</a></li>
+    <li><a href="https://wiki.lineageos.org/adb_fastboot_guide.html">adb set up on a host system</a></li>
+    <li>Developer options enabled (tap build number 7 times in system settings)</li>
+    <li>Options enabled in <em>Settings -&gt; System -&gt; Developer options</em>:
+    <ul>
+    <li><code>USB debugging</code></li>
+    <li><code>Rooted debugging</code></li>
+    </ul></li>
+    </ul>
+    <h3 id="notes">Notes</h3>
+    <ul>
+    <li>Tested on vanilla <em>LineageOS 18.1</em> (no MicroG) on a <em>Fairphone 2</em>. It should also work for other devices and probably earlier versions of <em>LineageOS</em>, also with MicroG.</li>
+    <li>No guarantee for comprehensiveness or correctness. Documentation is spotty to say the least.</li>
+    <li>Kudos:
+    <ul>
+    <li><a href="https://www.kuketz-blog.de/android-ohne-google-take-back-control-teil1/">Kuketz-Blog: Android ohne Google: Take back control!</a> (German)</li>
+    <li><a href="https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/">Degoogling LineageOS instructions - August 2019 update</a>.</li>
+    </ul></li>
+    </ul>
+</article>
+<hr>
+<hr>
+
+            <footer>
+                <small>
+                    <p class="author">
+                    By David Kaumanns, Ph.D.
+                    </p>
+                    <p>
+                        Throw me a wrench via:
+                        <ul>
+                            <li>
+                                Email: david [ätt] kaumanns.io
+                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+                            </li>
+                            <li>
+                                Matrix: @mael:hackbrettl.de
+                            </li>
+                            <li>
+                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+                            </li>
+                        </ul>
+                    </p>
+                    <hr>
+                    <p>
+                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+                        and is served by a Raspberry Pi 3.
+                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+                    </p>
+                    <p>
+                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+                    </p>
+                    <p>
+                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+                        <br />
+                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+                        </a>
+                    <p>
+                </small>
+            </footer>
+        </main>
+	</body>
+</html>

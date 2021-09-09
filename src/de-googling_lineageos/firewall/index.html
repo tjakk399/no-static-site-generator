@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="referrer" content="no-referrer">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="David Kaumanns, Ph.D." />
+        <title>kaumanns.io</title>
+		<style type="text/css">
+			body {
+				color:       #444;
+				font-size:   14px;
+				line-height: 1.6;
+				margin:      0px auto;
+				max-width:   650px;
+				padding:     0 10px
+        font-family: Verdana, Geneva, sans-serif;
+			}
+			h1,h2,h3 {
+				line-height: 1.2;
+			}
+      article,footer {
+        margin: 40px 10px 40px 10px;
+      }
+      a {
+        color:           SteelBlue;
+        text-decoration: none;
+      }
+      a:hover {
+        color: Blue;
+      }
+      pre {
+        background:    #002b36;
+        border-radius: 8px;
+        color:         #fdf6e3;
+        counter-reset: line;
+        display:       block;
+        overflow:      auto;
+        padding:       5px;
+        tab-size:      2;
+      }
+      figure figcaption {
+        text-align: center
+      }
+      figure img {
+        display:      block;
+        margin-left:  auto;
+        margin-right: auto;
+        max-width:    400px;
+        width:        75%;
+      }
+      .tag {
+        background:    SteelBlue;
+        border-radius: 4px;
+        color:         white;
+        padding:       2px;
+      }
+      .center {
+        text-align: center
+      }
+      .bigger {
+        font-size: larger;
+      }
+		</style>
+	</head>
+	<body>
+        <main>
+            <nav class="center">
+                <p class="bigger">
+                  david kaumanns.io
+                </p>
+                <p class="logo">
+                  <a href="/">
+                      <img alt="Logo" style="border-width:0" src="/logo.png" />
+                  </a>
+                </p>
+                <!-- <p> -->
+                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+                <!-- </p> -->
+            </nav>
+            <article>
+    <header>
+                <p class="center">
+            <a href="..">De-Googling Lineage OS 18.1</a>
+        </p>
+        <h1 class="center">
+            <a href=".">Firewall with <em>AFWall+</em></a>
+        </h1>
+                        <p class="center">
+                        <span class="tag">Privacy</span>        </p>
+                        <p class="last_update center">
+            Last update: <time>09.09.2021</time>
+        </p>
+            </header>
+    <p><strong>Requirements</strong>:</p>
+    <ul>
+    <li>Rooted system</li>
+    </ul>
+    <hr />
+    <p>On Android 11/Lineage OS 18.1, processes still get unrestricted network access (Wi-Fi and mobile data) per default. Depending on the apps you use, this activity may send all kinds of data to Google or other third parties.</p>
+    <p>Android’s user settings are cumbersome to maintain and do not allow low-level system services to be restricted.</p>
+    <p>Coming the rescue, <a href="https://f-droid.org/en/packages/dev.ukanth.ufirewall/">AFWall+</a> is a firewall that works with the system’s iptables, hence the root requirement. It allows you to precisely control which apps, including system-level services, get access to which internet connection interface, e.g. Wi-Fi, mobile, VPN, roaming, etc.</p>
+    <p><a href="https://www.kuketz-blog.de/afwall-digitaler-tuervorsteher-take-back-control-teil4/">Kuketz</a> (German) describes <em>AFWall+</em>’s usage in detail, though the interface is pretty self-explanatory. User apps may be blocked freely to your liking. Regarding system services, Kuketz suggests the following to be whitelisted in order to maintain basic system functionality:</p>
+    <ul>
+    <li>Updater</li>
+    <li>(root) - Apps running as root</li>
+    <li>(ntp) - Internet time servers</li>
+    <li>com.android.providers.media, Download Manager, Downloads, MTP Hosts, Sounds</li>
+    </ul>
+    <h3 id="alternative-for-unrooted-systems-netguard">Alternative for unrooted systems: <em>NetGuard</em></h3>
+    <figure>
+    <img src="lineage_netguard.@monochrome.png" alt="NetGuard on Lineage OS" /><figcaption aria-hidden="true">NetGuard on Lineage OS</figcaption>
+    </figure>
+    <p><a href="https://f-droid.org/en/packages/eu.faircode.netguard/">NetGuard</a> is a rootless firewall. It acts as a VPN, so you would not be able to use another VPN service.</p>
+    <p>In <em>NetGuard</em>’s settings, enable <em>Block Wi-Fi</em> and <em>Block mobile</em> per default, and then enable each single app’s network access manually in the main menu.</p>
+    <figure>
+    <img src="lineage_netguard_settings.@monochrome.png" alt="NetGuard on Lineage OS" /><figcaption aria-hidden="true">NetGuard on Lineage OS</figcaption>
+    </figure>
+    <h4 id="manage-system-apps">Manage system apps</h4>
+    <p>If you dare, enable <em>Advanced options -&gt; Manage system apps</em> to include system services under your control.</p>
+    <figure>
+    <img src="lineage_netguard_settings_advanced.@monochrome.png" alt="NetGuard on Lineage OS" /><figcaption aria-hidden="true">NetGuard on Lineage OS</figcaption>
+    </figure>
+    <p>I am still experimenting myself with this option, but it seems that you should be fine with allowing network access for these system services (and their correlates):</p>
+    <ul>
+    <li>Android System</li>
+    <li>CaptivePortalLogin</li>
+    <li>DNS daemon</li>
+    <li>Network manager</li>
+    <li>Tethering</li>
+    <li>Updater</li>
+    <li>com.android.server.NetworkPermissionConfig</li>
+    <li>root</li>
+    </ul>
+    <p>This still leaves a bunch of weird low-level services without unnecessary network access.</p>
+    <p>Note that some services can only be managed together as correlates. For example restricting <em>Android System</em> restricts a set of other system services as well.</p>
+</article>
+<hr>
+<hr>
+
+            <footer>
+                <small>
+                    <p class="author">
+                    By David Kaumanns, Ph.D.
+                    </p>
+                    <p>
+                        Throw me a wrench via:
+                        <ul>
+                            <li>
+                                Email: david [ätt] kaumanns.io
+                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+                            </li>
+                            <li>
+                                Matrix: @mael:hackbrettl.de
+                            </li>
+                            <li>
+                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+                            </li>
+                        </ul>
+                    </p>
+                    <hr>
+                    <p>
+                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+                        and is served by a Raspberry Pi 3.
+                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+                    </p>
+                    <p>
+                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+                    </p>
+                    <p>
+                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+                        <br />
+                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+                        </a>
+                    <p>
+                </small>
+            </footer>
+        </main>
+	</body>
+</html>

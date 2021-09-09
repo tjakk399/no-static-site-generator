@@ -1,0 +1,31 @@
+<article>
+    <header>
+        $if(subtitle)$
+        <p class="center">
+            <a href="..">$title$</a>
+        </p>
+        <h1 class="center">
+            <a href=".">$subtitle$</a>
+        </h1>
+        $elseif(title)$
+        <h1 class="title center">
+            <a href=".">$title$</a>
+        </h1>
+        $endif$
+        $if(tags)$
+        <p class="center">
+            $for(tags)$
+            <span class="tag">$tags$</span>$sep$
+            $endfor$
+        </p>
+        $endif$
+        $if(last-update)$
+        <p class="last_update center">
+            Last update: <time>$last-update$</time>
+        </p>
+        $endif$
+    </header>
+    $body$
+</article>
+<hr>
+<hr>

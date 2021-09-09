@@ -1,0 +1,55 @@
+---
+title: De-Googling LineageOS 18.1
+last-update: 09.09.2021
+author: David Kaumanns
+tags:
+  - Privacy
+---
+
+![A LineageOS desktop](lineage_desktop.@monochrome.png)
+
+## Introduction
+
+[LineageOS](https://lineageos.org/) is an open-source derivative of Google's Android Open Source Project (AOSP).
+It is pretty lean and comes out of the box without all the crapware of the big smartphone vendors, which means: *almost* no tracking by third parties.
+
+Google is still nosing around, though, so it needs a few tweaks before you can call it a true private OS.
+This is a comprehensive step-by-step guide to do so.
+Part of it is an English translation of the excellent [Kuketz-Blog](https://www.kuketz-blog.de/android-ohne-google-take-back-control-teil1/) (German).
+
+### Content
+
+1. [High-Level System Settings](system_settings)
+  - Change system browser defaults
+  - Disable phone number lookup
+  - Change the Domain Name Server (DNS)
+2. Helpful apps
+  - [Domain Name Blocking with *AdAway*](host_blocker)
+  - [Firewall with *AFWall+*](firewall)
+3. Low-level system settings
+  - [Captive Portal Server](captive_portal_server)
+  - [Network Time Protocol (NTP) Server](ntp_server)
+  - [SUPL for A-GPS](supl_agps)
+  - Replace AOSP Chromium Webview engine with *Bromite* (TODO)
+
+### Requirements
+
+... if you want to follow all steps:
+
+- [LineageOS 18.1](https://lineageos.org/) installed
+- OS rooted with [Magisk](https://github.com/topjohnwu/Magisk), e.g. on a [Fairphone](/rooting_lineageos)
+- [adb set up on a host system](https://wiki.lineageos.org/adb_fastboot_guide.html)
+- Developer options enabled (tap build number 7 times in system settings)
+- Options enabled in *Settings -> System -> Developer options*:
+  - `USB debugging`
+  - `Rooted debugging`
+
+### Notes
+
+- Tested on vanilla *LineageOS 18.1* (no MicroG) on a *Fairphone 2*. It should also work for other devices and probably earlier versions of *LineageOS*, also with MicroG.
+- No guarantee for comprehensiveness or correctness. Documentation is spotty to say the least.
+- Kudos:
+  - [Kuketz-Blog: Android ohne Google: Take back control!](https://www.kuketz-blog.de/android-ohne-google-take-back-control-teil1/) (German)
+  - [Degoogling LineageOS instructions - August 2019 update](https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/).
+
+

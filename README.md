@@ -12,17 +12,18 @@ Then this is for you.
 
 ## Setup
 
-Clone repository.
+Clone this repository.
 
 Install:
 
 - [Pandoc](https://pandoc.org/)
+- ImageMagick (optional)
 
 ## Usage
 
-The `src` directory contains your website almost exactly as it will be served by your server, including directory structure, assets and all.
+The `src` directory contains your static website almost exactly as it will be served by your server, including directory structure, assets and all.
 
-The only difference: Each article is written as a Pandoc file, not as HTML.
+The only difference: Each page is written as a Pandoc file, not as HTML.
 
 ### Header YAML
 
@@ -33,13 +34,12 @@ Example:
 
 ```
 ---
-title: De-Googling Lineage OS 18.1 on Fairphone 2
-last-update: 20.07.2021
-author: David Kaumanns
-keywords:
-    - development
-    - lineageos
-    - privacy
+title: Fancy title
+last-update: 31.12.1999
+author: Joe Schmoe
+tags:
+  - Taggy
+  - McTagface
 ---
 ```
 
@@ -57,16 +57,43 @@ make site TEMPLATE_ARTICLE=<HTML template for article> TEMPLATE_INDEX=<HTML temp
 Look into the `templates` directory for example templates.
 They are used as defaults.
 
+
+#### Optional: mark images for conversion to monochrome
+
+This is a feature I implemented in order to save bandwidth from my Raspberry Pi server.
+I may package it more neatly in the future.
+
+Until then, let selected original images be converted to monochrome + 600px width by naming their file extensions as such:
+
+```
+myfilename.@to-monochrome.png
+```
+
+All images thusly named will be converted to monochrome:
+
+```
+myfilename.@monochrome.png
+```
+
+... which you can refer to e.g. in your Pandoc files.
+
+
 ### Synchronize site with server
+
+Upload your site to a remote destination.
+Pandoc source files (and original images, see above) are excluded automatically.
+
+Call:
+
 
 ```
 make sync DESTINATION=<URL>
 ```
 
-`DESTINATION` may point to your Raspberry, for instance. Like so:
+`DESTINATION` points to your server's `www/html` directory, e.g.:
 
 ```
-make sync DESTINATION=pi@192.168.178.39:/var/www/html/kaumanns.io
+make sync DESTINATION=pi@192.168.178.39:/var/www/html/mywebsite.org
 ```
 
 ## License

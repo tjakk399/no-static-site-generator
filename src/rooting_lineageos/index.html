@@ -1,168 +1,195 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-        <meta name="referrer" content="no-referrer">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="David Kaumanns, Ph.D." />
-        <title>kaumanns.io</title>
-		<style type="text/css">
-			body {
-				color:       #444;
-				font-size:   14px;
-				line-height: 1.6;
-				margin:      0px auto;
-				max-width:   650px;
-				padding:     0 10px
-        font-family: Verdana, Geneva, sans-serif;
-			}
-			h1,h2,h3 {
-				line-height: 1.2;
-			}
-      article,footer {
-        margin: 40px 10px 40px 10px;
-      }
-      a {
-        color:           SteelBlue;
-        text-decoration: none;
-      }
-      a:hover {
-        color: Blue;
-      }
-      pre {
-        background:    #002b36;
-        border-radius: 8px;
-        color:         #fdf6e3;
-        counter-reset: line;
-        display:       block;
-        overflow:      auto;
-        padding:       5px;
-        tab-size:      2;
-      }
-      figure figcaption {
-        text-align: center
-      }
-      figure img {
-        display:      block;
-        margin-left:  auto;
-        margin-right: auto;
-        max-width:    400px;
-        width:        75%;
-      }
-      .tag {
-        background:    SteelBlue;
-        border-radius: 4px;
-        color:         white;
-        padding:       2px;
-      }
-      .center {
-        text-align: center
-      }
-      .bigger {
-        font-size: larger;
-      }
-		</style>
-	</head>
-	<body>
-        <main>
-            <nav class="center">
-                <p class="bigger">
-                  david kaumanns.io
-                </p>
-                <p class="logo">
-                  <a href="/">
-                      <img alt="Logo" style="border-width:0" src="/logo.png" />
-                  </a>
-                </p>
-                <!-- <p> -->
-                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
-                <!-- </p> -->
-            </nav>
-            <article>
-    <header>
-                <h1 class="title center">
-            <a href=".">Rooting Lineage OS 18.1 on Fairphone 2 with Magisk</a>
-        </h1>
-                        <p class="center">
-                        <span class="tag">Linux</span>        </p>
-                        <p class="last_update center">
-            Last update: <time>05.09.2021</time>
+  <head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="David Kaumanns, Ph.D." />
+    <title>Rooting LineageOS 18.1  with Magisk</title>
+    <style type="text/css">
+    body {
+      color:       #444;
+      font-size:   14px;
+      line-height: 1.6;
+      margin:      0px auto;
+      max-width:   650px;
+      padding:     0 10px
+      font-family: Verdana, Geneva, sans-serif;
+    }
+    h1,h2,h3 {
+      line-height: 1.2;
+    }
+    article,footer {
+      margin: 40px 10px 40px 10px;
+    }
+    a {
+      color:           SteelBlue;
+      text-decoration: none;
+    }
+    a:hover {
+      color: Blue;
+    }
+    pre {
+      background:    #002b36;
+      border-radius: 8px;
+      color:         #fdf6e3;
+      counter-reset: line;
+      display:       block;
+      overflow:      auto;
+      padding:       5px;
+      tab-size:      2;
+    }
+    blockquote {
+      background:    Gainsboro;
+      border-radius: 8px;
+      counter-reset: line;
+      display:       block;
+      display:       block;
+      overflow:      auto;
+      font-style:    italic;
+      padding:       5px;
+    }
+    figure figcaption {
+      text-align: center
+    }
+    figure img {
+      display:      block;
+      margin-left:  auto;
+      margin-right: auto;
+      max-width:    400px;
+      width:        75%;
+    }
+    .tag {
+      background:    SteelBlue;
+      border-radius: 4px;
+      color:         white;
+      padding:       2px;
+    }
+    .center {
+      text-align: center
+    }
+    .bigger {
+      font-size: larger;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="center">
+        <p class="bigger">
+          david kaumanns.io
         </p>
-            </header>
-    <p>Rooting Lineage OS with <em>Magisk</em> is necessary if you want to use privacy power apps such as <em>AdAway</em> (host blocker) and <em>AFWall+</em> (firewall).</p>
-    <p>It is also slightly weird, which is why I want to summarize the official <a href="https://topjohnwu.github.io/Magisk/install.html"><em>Magisk</em> installation instructions</a>:</p>
-    <ol type="1">
-    <li><p>Install the <em>Magisk</em> app just like a normal app, e.g. via <em>F-Droid</em>. No flashing necessary.</p></li>
-    <li><p>Open <em>Magisk</em> and check whether your device has <strong>ramdisk</strong> in the boot partition (via “Ramdisk” info).</p></li>
-    </ol>
-    <p>Ramdisk availability informs whether to continue with <code>boot.img</code> or <code>recovery.img</code>. My <em>Fairphone 2</em> has ramdisk, so I will assume it below.</p>
-    <p><strong>Important</strong>: your device may not have ramdisk, so please check the original installation instructions.</p>
-    <ol start="3" type="1">
-    <li><p>Download the zip of your current <a href="https://download.lineageos.org/">Lineage OS</a> version to your host machine and extract it. You should find a <strong><code>boot.img</code></strong> file.</p></li>
-    <li><p>Copy the <code>boot.img</code> file to your device:</p></li>
-    </ol>
-    <pre><code>adb push boot.img /sdcard/Download/</code></pre>
-    <ol start="5" type="1">
-    <li><p>Open <em>Magisk</em> and patch the <code>boot.img</code> file via the install dialog.</p></li>
-    <li><p>Copy the <strong>patched <code>boot.img</code></strong> back to the host machine, like this:</p></li>
-    </ol>
-    <pre><code>pull /sdcard/Download/magisk_patched-23000_iXpIR.img</code></pre>
-    <ol start="7" type="1">
-    <li>Reboot the device into fastboot mode:</li>
-    </ol>
-    <pre><code>adb reboot bootloader</code></pre>
-    <ol start="8" type="1">
-    <li>Flash the patched <code>boot.img</code> onto the device:</li>
-    </ol>
-    <pre><code>sudo fastboot flash boot magisk_patched-23000_iXpIR.img</code></pre>
-    <ol start="9" type="1">
-    <li>Reboot the device:</li>
-    </ol>
-    <pre><code>sudo fastboot reboot</code></pre>
-    <p>Your device should now be rooted.</p>
-    <p><strong>Note</strong>: In <em>Magisk</em>, tap the shield icon in the bottom row to manage superuser permissions for apps.</p>
+        <p class="logo">
+          <a href="/">
+            <img alt="Logo" style="border-width:0" src="/logo.png" />
+          </a>
+        </p>
+      <!-- <p> -->
+      <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+      <!-- </p> -->
+      </nav>
+      <article>
+  <header>
+        <h1 class="title center">
+      <a href=".">Rooting LineageOS 18.1 with Magisk</a>
+    </h1>
+            <p class="center">
+            <span class="tag">Linux</span>    </p>
+            <p class="last_update center">
+      Updated: <time>13.09.2021</time>
+    </p>
+      </header>
+<p>Rooting Lineage OS with <em>Magisk</em> is necessary if you want to use privacy power apps such as <em>AdAway</em> (host blocker) and <em>AFWall+</em> (firewall).</p>
+<p>It is also slightly weird, which is why I want to summarize the official <em>Magisk</em> installation instructions from:</p>
+<p><a href="https://topjohnwu.github.io/Magisk/install.html" class="uri">https://topjohnwu.github.io/Magisk/install.html</a></p>
+<h3 id="install-the-magisk-app">1. Install the <em>Magisk</em> app</h3>
+<p>… just like a normal app, e.g. via <em>F-Droid</em>. No flashing necessary.</p>
+<h3 id="check-ramdisk-status-of-boot-partition">2. Check <em>ramdisk</em> status of boot partition</h3>
+<p>by opening the <em>Magisk</em> app and checking the <em>Ramdisk</em> info field.</p>
+<p>Ramdisk availability informs whether to continue with <code>boot.img</code> or <code>recovery.img</code>. My <em>Fairphone 2</em> has ramdisk, so I will assume it below.</p>
+<p><strong>Important</strong>: your device may not have ramdisk, so please check the original installation instructions.</p>
+<h3 id="retrieve-boot.img-from-lineageos-image">3. Retrieve <code>boot.img</code> from <em>LineageOS</em> image</h3>
+<p>Check your current <em>LineageOS</em> version e.g. by date under <em>Settings -&gt; Updater</em>.</p>
+<p>Download the zip archive of your current <em>LineageOS</em> version to your host machine from:</p>
+<p><a href="https://download.lineageos.org" class="uri">https://download.lineageos.org</a></p>
+<p>Extract it, e.g. like this:</p>
+<pre><code>$ unzip lineage-18.1-*-nightly-FP2-signed.zip</code></pre>
+<p>You should find a <strong><code>boot.img</code></strong> file.</p>
+<h3 id="connect-your-device-via-usb">4. Connect your device via USB</h3>
+<p>… and enable <em>File Transfer</em> under <em>Settings -&gt; Connected devices -&gt; USB</em>.</p>
+<h3 id="push-boot.img">5. Push <code>boot.img</code></h3>
+<p>… from the host machine to the device:</p>
+<pre><code>$ adb push boot.img /sdcard/Download/</code></pre>
+<h3 id="patch-the-boot.img-on-device">6. Patch the <code>boot.img</code> on device</h3>
+<p>… by opening the <em>Magisk</em> app and following the install dialog.</p>
+<p>Check the name of the output file in the provided log. Disregard the path shown. The actual file looks like this:</p>
+<pre><code>/sdcard/Download/magisk_patched-23000_uNQ1H.img</code></pre>
+<h3 id="pull-the-patched-boot.img">7. Pull the <strong>patched <code>boot.img</code></strong></h3>
+<p>… back to the host machine, like this:</p>
+<pre><code>$ adb pull /sdcard/Download/magisk_patched-23000_uNQ1H.img</code></pre>
+<h3 id="reboot-the-device-into-fastboot-mode">8. Reboot the device into fastboot mode</h3>
+<pre><code>$ adb reboot bootloader</code></pre>
+<p>Wait until the <em>Fairphone</em> logo appears. The device is now in fastboot mode.</p>
+<h3 id="flash-the-patched-boot.img">9. Flash the patched <code>boot.img</code></h3>
+<p>… onto the device:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo fastboot flash boot magisk_patched-23000_uNQ1H.img</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[sudo]</span> password for david:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Sending</span> <span class="st">&#39;boot&#39;</span> <span class="er">(</span><span class="ex">6974</span> KB<span class="kw">)</span>                           <span class="ex">OKAY</span> [  0.313s]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> <span class="st">&#39;boot&#39;</span>                                     OKAY [  0.186s]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Finished.</span> Total time: 0.507s</span></code></pre></div>
+<h3 id="reboot-the-device">10. Reboot the device</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo fastboot reboot</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rebooting</span>                                          OKAY [  0.000s]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Finished.</span> Total time: 0.050s</span></code></pre></div>
+<h3 id="check-root-status">11. Check root status</h3>
+<p>… in the <em>Magisk</em> app. It should now show a build number under <em>Installed</em> instead of <em>N/A</em>.</p>
+<p><strong>Notes</strong>:</p>
+<ul>
+<li>In <em>Magisk</em>, tap the shield icon in the bottom row to manage superuser permissions for apps.</li>
+<li>You may have to repeat these steps for each system upgrade.</li>
+</ul>
 </article>
 <hr>
 <hr>
 
-            <footer>
-                <small>
-                    <p class="author">
-                    By David Kaumanns, Ph.D.
-                    </p>
-                    <p>
-                        Throw me a wrench via:
-                        <ul>
-                            <li>
-                                Email: david [ätt] kaumanns.io
-                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
-                            </li>
-                            <li>
-                                Matrix: @mael:hackbrettl.de
-                            </li>
-                            <li>
-                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
-                            </li>
-                        </ul>
-                    </p>
-                    <hr>
-                    <p>
-                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
-                        and is served by a Raspberry Pi 3.
-                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
-                    </p>
-                    <p>
-                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
-                    </p>
-                    <p>
-                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-                        <br />
-                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
-                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
-                        </a>
-                    <p>
-                </small>
-            </footer>
-        </main>
-	</body>
+      <footer>
+        <small>
+          <p class="author">
+            By David Kaumanns, Ph.D.
+          </p>
+          <p>
+            Throw me a wrench via:
+            <ul>
+              <li>
+                Email: david [ätt] kaumanns.io
+                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+              </li>
+              <li>
+                Matrix: @mael:hackbrettl.de
+              </li>
+              <li>
+                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+              </li>
+            </ul>
+          </p>
+          <hr>
+          <p>
+            This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+            and is served by a Raspberry Pi 3.
+            The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+          </p>
+          <p>
+            All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+          </p>
+          <p>
+            All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+            <br />
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+              <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+            </a>
+          <p>
+        </small>
+      </footer>
+    </main>
+  </body>
 </html>

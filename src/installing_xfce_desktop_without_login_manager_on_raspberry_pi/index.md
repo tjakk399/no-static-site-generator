@@ -1,5 +1,5 @@
 ---
-title: "Installing XFCE Desktop Without Login Manager on Raspberry Pi"
+title: Installing XFCE Desktop Without Login Manager on Raspberry Pi
 last-update: 11.03.2020
 author: David Kaumanns
 tags:

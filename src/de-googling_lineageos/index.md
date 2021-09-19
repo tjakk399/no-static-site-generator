@@ -36,13 +36,20 @@ Part of it is an English translation of the excellent [Kuketz-Blog](https://www.
 
 ... if you want to follow all steps:
 
-- [LineageOS 18.1](https://lineageos.org/) installed
-- OS rooted with [Magisk](https://github.com/topjohnwu/Magisk), e.g. on a [Fairphone](/rooting_lineageos)
-- [adb set up on a host system](https://wiki.lineageos.org/adb_fastboot_guide.html)
-- Developer options enabled (tap build number 7 times in system settings)
-- Options enabled in *Settings -> System -> Developer options*:
-  - `USB debugging`
-  - `Rooted debugging`
+1. [`adb` and `fastboot` set up on a host system](https://wiki.lineageos.org/adb_fastboot_guide.html)
+2. [LineageOS 18.1 installed](https://wiki.lineageos.org/devices/)
+3. ... and [rooted with *Magisk*](/rooting_lineageos)
+4. Developer mode enabled by tapping build number 7 times in *Settings -> About phone -> Build number*)
+5. Options enabled in *Settings -> System -> Developer options*:
+  - *USB debugging*
+  - *Rooted debugging*
+
+### Steps to repeat after each system upgrade
+
+- [Rooting with *Magisk*](/rooting_lineageos)
+  - ... and re-enable *AFWall+* firewall.
+- [Network Time Protocol (NTP) Server](ntp_server)
+- [SUPL for A-GPS](supl_agps)
 
 ### Notes
 

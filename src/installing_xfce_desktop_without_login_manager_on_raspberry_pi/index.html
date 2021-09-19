@@ -1,167 +1,177 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-        <meta name="referrer" content="no-referrer">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="David Kaumanns, Ph.D." />
-        <title>kaumanns.io</title>
-		<style type="text/css">
-			body {
-				color:       #444;
-				font-size:   14px;
-				line-height: 1.6;
-				margin:      0px auto;
-				max-width:   650px;
-				padding:     0 10px
-        font-family: Verdana, Geneva, sans-serif;
-			}
-			h1,h2,h3 {
-				line-height: 1.2;
-			}
-      article,footer {
-        margin: 40px 10px 40px 10px;
-      }
-      a {
-        color:           SteelBlue;
-        text-decoration: none;
-      }
-      a:hover {
-        color: Blue;
-      }
-      pre {
-        background:    #002b36;
-        border-radius: 8px;
-        color:         #fdf6e3;
-        counter-reset: line;
-        display:       block;
-        overflow:      auto;
-        padding:       5px;
-        tab-size:      2;
-      }
-      figure figcaption {
-        text-align: center
-      }
-      figure img {
-        display:      block;
-        margin-left:  auto;
-        margin-right: auto;
-        max-width:    400px;
-        width:        75%;
-      }
-      .tag {
-        background:    SteelBlue;
-        border-radius: 4px;
-        color:         white;
-        padding:       2px;
-      }
-      .center {
-        text-align: center
-      }
-      .bigger {
-        font-size: larger;
-      }
-		</style>
-	</head>
-	<body>
-        <main>
-            <nav class="center">
-                <p class="bigger">
-                  david kaumanns.io
-                </p>
-                <p class="logo">
-                  <a href="/">
-                      <img alt="Logo" style="border-width:0" src="/logo.png" />
-                  </a>
-                </p>
-                <!-- <p> -->
-                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
-                <!-- </p> -->
-            </nav>
-            <article>
-    <header>
-                <h1 class="title center">
-            <a href=".">Installing XFCE Desktop Without Login Manager on Raspberry Pi</a>
-        </h1>
-                        <p class="center">
-                        <span class="tag">Linux</span>        </p>
-                        <p class="last_update center">
-            Last update: <time>11.03.2020</time>
+  <head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="David Kaumanns, Ph.D." />
+    <title>Installing XFCE Desktop Without Login Manager on Raspberry Pi</title>
+    <style type="text/css">
+    body {
+      color:       #444;
+      font-size:   14px;
+      line-height: 1.6;
+      margin:      0px auto;
+      max-width:   650px;
+      padding:     0 10px
+      font-family: Verdana, Geneva, sans-serif;
+    }
+    h1,h2,h3 {
+      line-height: 1.2;
+    }
+    article,footer {
+      margin: 40px 10px 40px 10px;
+    }
+    a {
+      color:           SteelBlue;
+      text-decoration: none;
+    }
+    a:hover {
+      color: Blue;
+    }
+    pre {
+      background:    #002b36;
+      border-radius: 8px;
+      color:         #fdf6e3;
+      counter-reset: line;
+      display:       block;
+      overflow:      auto;
+      padding:       5px;
+      tab-size:      2;
+    }
+    blockquote {
+      background:    Gainsboro;
+      border-radius: 8px;
+      counter-reset: line;
+      display:       block;
+      display:       block;
+      overflow:      auto;
+      font-style:    italic;
+      padding:       5px;
+    }
+    figure figcaption {
+      text-align: center
+    }
+    figure img {
+      display:      block;
+      margin-left:  auto;
+      margin-right: auto;
+      max-width:    400px;
+      width:        75%;
+    }
+    .tag {
+      background:    SteelBlue;
+      border-radius: 4px;
+      color:         white;
+      padding:       2px;
+    }
+    .center {
+      text-align: center
+    }
+    .bigger {
+      font-size: larger;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="center">
+        <p class="bigger">
+          david kaumanns.io
         </p>
-            </header>
-    <h2 id="introduction">Introduction</h2>
-    <p>If you intend to use the Raspberry Pi mainly in headless mode and only sometimes in desktop mode, prevent unnecessary CPU and RAM usage by booting into the terminal by default.</p>
-    <p>This guide shows how to install XFCE desktop for this purpose. Refer to the source documentation for more information and other desktop environments <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-    <p>Tested on:</p>
-    <ul>
-    <li>Raspberry Pi 4 running Raspbian Buster Lite (without desktop)</li>
-    </ul>
-    <h2 id="steps">Steps</h2>
-    <p>A normal XFCE desktop installation requires these four components</p>
-    <ol type="1">
-    <li>Display Server: <em>Xorg</em></li>
-    <li>Desktop Environment: <em>XFCE</em></li>
-    <li>Window Manager: <em>XFWM</em></li>
-    <li>Login Manager: <em>LightDM</em></li>
-    </ol>
-    <p>Install 1 to 3:</p>
-    <pre><code>sudo apt-get install --no-install-recommends xserver-xorg xinit
-    sudo apt-get install xfce4 xfce4-terminal</code></pre>
-    <p><em>LightDM</em> is installed and enabled by default, so disable it:</p>
-    <pre><code>sudo systemctl disable lightdm.service</code></pre>
-    <p>Start the desktop:</p>
-    <pre><code>startx</code></pre>
-    <h2 id="tweaks">Tweaks</h2>
-    <p>If you see unused black borders around your screen, edit <code>/etc/config.txt</code> to reflect this entry:</p>
-    <pre><code>disable_overscan=1</code></pre>
-    <section class="footnotes" role="doc-endnotes">
-    <hr />
-    <ol>
-    <li id="fn1" role="doc-endnote"><p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=133691" class="uri">https://www.raspberrypi.org/forums/viewtopic.php?t=133691</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-    </ol>
-    </section>
+        <p class="logo">
+          <a href="/">
+            <img alt="Logo" style="border-width:0" src="/logo.png" />
+          </a>
+        </p>
+      <!-- <p> -->
+      <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+      <!-- </p> -->
+      </nav>
+      <article>
+  <header>
+        <h1 class="title center">
+      <a href=".">Installing XFCE Desktop Without Login Manager on Raspberry Pi</a>
+    </h1>
+            <p class="center">
+            <span class="tag">Linux</span>    </p>
+            <p class="last_update center">
+      Updated: <time>11.03.2020</time>
+    </p>
+      </header>
+<h2 id="introduction">Introduction</h2>
+<p>If you intend to use the Raspberry Pi mainly in headless mode and only sometimes in desktop mode, prevent unnecessary CPU and RAM usage by booting into the terminal by default.</p>
+<p>This guide shows how to install XFCE desktop for this purpose. Refer to the source documentation for more information and other desktop environments <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Tested on:</p>
+<ul>
+<li>Raspberry Pi 4 running Raspbian Buster Lite (without desktop)</li>
+</ul>
+<h2 id="steps">Steps</h2>
+<p>A normal XFCE desktop installation requires these four components</p>
+<ol type="1">
+<li>Display Server: <em>Xorg</em></li>
+<li>Desktop Environment: <em>XFCE</em></li>
+<li>Window Manager: <em>XFWM</em></li>
+<li>Login Manager: <em>LightDM</em></li>
+</ol>
+<p>Install 1 to 3:</p>
+<pre><code>sudo apt-get install --no-install-recommends xserver-xorg xinit
+sudo apt-get install xfce4 xfce4-terminal</code></pre>
+<p><em>LightDM</em> is installed and enabled by default, so disable it:</p>
+<pre><code>sudo systemctl disable lightdm.service</code></pre>
+<p>Start the desktop:</p>
+<pre><code>startx</code></pre>
+<h2 id="tweaks">Tweaks</h2>
+<p>If you see unused black borders around your screen, edit <code>/etc/config.txt</code> to reflect this entry:</p>
+<pre><code>disable_overscan=1</code></pre>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=133691" class="uri">https://www.raspberrypi.org/forums/viewtopic.php?t=133691</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 </article>
 <hr>
 <hr>
 
-            <footer>
-                <small>
-                    <p class="author">
-                    By David Kaumanns, Ph.D.
-                    </p>
-                    <p>
-                        Throw me a wrench via:
-                        <ul>
-                            <li>
-                                Email: david [ätt] kaumanns.io
-                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
-                            </li>
-                            <li>
-                                Matrix: @mael:hackbrettl.de
-                            </li>
-                            <li>
-                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
-                            </li>
-                        </ul>
-                    </p>
-                    <hr>
-                    <p>
-                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
-                        and is served by a Raspberry Pi 3.
-                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
-                    </p>
-                    <p>
-                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
-                    </p>
-                    <p>
-                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-                        <br />
-                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
-                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
-                        </a>
-                    <p>
-                </small>
-            </footer>
-        </main>
-	</body>
+      <footer>
+        <small>
+          <p class="author">
+            By David Kaumanns, Ph.D.
+          </p>
+          <p>
+            Throw me a wrench via:
+            <ul>
+              <li>
+                Email: david [ätt] kaumanns.io
+                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+              </li>
+              <li>
+                Matrix: @mael:hackbrettl.de
+              </li>
+              <li>
+                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+              </li>
+            </ul>
+          </p>
+          <hr>
+          <p>
+            This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+            and is served by a Raspberry Pi 3.
+            The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+          </p>
+          <p>
+            All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+          </p>
+          <p>
+            All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+            <br />
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+              <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+            </a>
+          <p>
+        </small>
+      </footer>
+    </main>
+  </body>
 </html>

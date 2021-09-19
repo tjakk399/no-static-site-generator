@@ -1,5 +1,5 @@
 ---
-title:
+title: Index
 ---
 
 I'm a software engineer, trained Computational Linguist and Machine Learning specialist.
@@ -16,9 +16,11 @@ This is it.
 
 ## September 2021
 
-- 09.09.2021: [De-Googling Lineage OS 18.1](de-googling_lineageos)
+- 13.09.2021: [Email Is No Toy -- Use It Wisely](email_is_no_toy)
 <span class="tag">Privacy</a>
-- 05.09.2021: [Rooting Lineage OS 18.1](rooting_lineageos)
+- 13.09.2021: [Rooting LineageOS 18.1 with Magisk](rooting_lineageos)
+<span class="tag">Privacy</a>
+- 09.09.2021: [De-Googling LineageOS 18.1](de-googling_lineageos)
 <span class="tag">Privacy</a>
 
 ## March 2020

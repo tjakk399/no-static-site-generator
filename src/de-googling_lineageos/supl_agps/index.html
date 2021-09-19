@@ -1,207 +1,217 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-        <meta name="referrer" content="no-referrer">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="David Kaumanns, Ph.D." />
-        <title>kaumanns.io</title>
-		<style type="text/css">
-			body {
-				color:       #444;
-				font-size:   14px;
-				line-height: 1.6;
-				margin:      0px auto;
-				max-width:   650px;
-				padding:     0 10px
-        font-family: Verdana, Geneva, sans-serif;
-			}
-			h1,h2,h3 {
-				line-height: 1.2;
-			}
-      article,footer {
-        margin: 40px 10px 40px 10px;
-      }
-      a {
-        color:           SteelBlue;
-        text-decoration: none;
-      }
-      a:hover {
-        color: Blue;
-      }
-      pre {
-        background:    #002b36;
-        border-radius: 8px;
-        color:         #fdf6e3;
-        counter-reset: line;
-        display:       block;
-        overflow:      auto;
-        padding:       5px;
-        tab-size:      2;
-      }
-      figure figcaption {
-        text-align: center
-      }
-      figure img {
-        display:      block;
-        margin-left:  auto;
-        margin-right: auto;
-        max-width:    400px;
-        width:        75%;
-      }
-      .tag {
-        background:    SteelBlue;
-        border-radius: 4px;
-        color:         white;
-        padding:       2px;
-      }
-      .center {
-        text-align: center
-      }
-      .bigger {
-        font-size: larger;
-      }
-		</style>
-	</head>
-	<body>
-        <main>
-            <nav class="center">
-                <p class="bigger">
-                  david kaumanns.io
-                </p>
-                <p class="logo">
-                  <a href="/">
-                      <img alt="Logo" style="border-width:0" src="/logo.png" />
-                  </a>
-                </p>
-                <!-- <p> -->
-                <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
-                <!-- </p> -->
-            </nav>
-            <article>
-    <header>
-                <p class="center">
-            <a href="..">De-Googling Lineage OS 18.1</a>
+  <head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="David Kaumanns, Ph.D." />
+    <title>De-Googling Lineage OS 18.1SUPL for A-GPS</title>
+    <style type="text/css">
+    body {
+      color:       #444;
+      font-size:   14px;
+      line-height: 1.6;
+      margin:      0px auto;
+      max-width:   650px;
+      padding:     0 10px
+      font-family: Verdana, Geneva, sans-serif;
+    }
+    h1,h2,h3 {
+      line-height: 1.2;
+    }
+    article,footer {
+      margin: 40px 10px 40px 10px;
+    }
+    a {
+      color:           SteelBlue;
+      text-decoration: none;
+    }
+    a:hover {
+      color: Blue;
+    }
+    pre {
+      background:    #002b36;
+      border-radius: 8px;
+      color:         #fdf6e3;
+      counter-reset: line;
+      display:       block;
+      overflow:      auto;
+      padding:       5px;
+      tab-size:      2;
+    }
+    blockquote {
+      background:    Gainsboro;
+      border-radius: 8px;
+      counter-reset: line;
+      display:       block;
+      display:       block;
+      overflow:      auto;
+      font-style:    italic;
+      padding:       5px;
+    }
+    figure figcaption {
+      text-align: center
+    }
+    figure img {
+      display:      block;
+      margin-left:  auto;
+      margin-right: auto;
+      max-width:    400px;
+      width:        75%;
+    }
+    .tag {
+      background:    SteelBlue;
+      border-radius: 4px;
+      color:         white;
+      padding:       2px;
+    }
+    .center {
+      text-align: center
+    }
+    .bigger {
+      font-size: larger;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="center">
+        <p class="bigger">
+          david kaumanns.io
         </p>
-        <h1 class="center">
-            <a href=".">SUPL for A-GPS</a>
-        </h1>
-                        <p class="center">
-                        <span class="tag">Privacy</span>        </p>
-                        <p class="last_update center">
-            Last update: <time>09.09.2021</time>
+        <p class="logo">
+          <a href="/">
+            <img alt="Logo" style="border-width:0" src="/logo.png" />
+          </a>
         </p>
-            </header>
-    <p><strong>Requirements</strong>:</p>
-    <ul>
-    <li>Rooted system</li>
-    <li>Ability to open the command line on a *nix machine.</li>
-    <li>Android Debuge Bridge (ADB) set up on a host machine</li>
-    <li>Device connected to that host machine</li>
-    </ul>
-    <hr />
-    <p>From a handy (Reddit post)[https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/]:</p>
-    <blockquote>
-    <p>LineageOS defaults to <code>supl.google.com</code> for SUPL data, which helps in speeding up device positioning (aka TTFF) when using A-GPS, but each request to server is accompanied by device’s IMEI.</p>
-    </blockquote>
-    <p>In other words, each time your device requests its GPS position, it sends a unique identifier to Google’s servers along with its location.</p>
-    <p>If you are willing to trade quick GPS positioning for privacy, follow the steps below.</p>
-    <p>On your host machine, restart <code>adb</code> as root:</p>
-    <pre><code>$ adb root</code></pre>
-    <p>Re-mount root as read-write:</p>
-    <pre><code>$ adb shell mount -o rw,remount /</code></pre>
-    <p>Log into the device shell:</p>
-    <pre><code>$ adb shell</code></pre>
-    <p>Open the GPS configuration file for editing:</p>
-    <pre><code>$ nano /etc/gps.conf</code></pre>
-    <p>Now change some entries.</p>
-    <p>You may want to change <code>NTP_SERVER</code> to a European one:</p>
-    <pre><code>NTP_SERVER=europe.pool.ntp.org</code></pre>
-    <p>Change <code>SUPL_HOST</code> from the Google default to localhost:</p>
-    <pre><code>SUPL_HOST=localhost</code></pre>
-    <p>Leave the <code>SUPL_PORT</code> entry untouched, whether it is commented out or not.</p>
-    <p>Save and close the editor by pressing <code>CTRL+X</code> and <code>Y</code>.</p>
-    <p>Exit back on the host machine and re-mount root as read-only:</p>
-    <pre><code>$ adb shell mount -o ro,remount /</code></pre>
-    <p>Reboot your device, e.g. via:</p>
-    <pre><code>$ adb reboot</code></pre>
-    <p><strong>NOTE</strong>: After some months, I found this setting to be reset to default. My best guess is that some system update overwrote the configuration file.</p>
-    <p>For more information about the privacy aspects of A-GPS, refer to:</p>
-    <ul>
-    <li><a href="https://blog.wirelessmoves.com/2014/08/supl-reveals-my-identity-and-location-to-google.html" class="uri">https://blog.wirelessmoves.com/2014/08/supl-reveals-my-identity-and-location-to-google.html</a></li>
-    <li>(German) <a href="https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/" class="uri">https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/</a></li>
-    </ul>
-    <!--  -->
-    <!-- ``` -->
-    <!-- $ adb pull /system/etc/gps.conf -->
-    <!-- ``` -->
-    <!--  -->
-    <!--  -->
-    <!-- The edited `gps.conf` has to be copied from your host system back to `/system/etc/gps.conf`, somehow. -->
-    <!--  -->
-    <!-- *TWRP* does not seem to be able to decrypt an encrypted `/sdcard/` system storage (PIN-protected), at least through version *3.5.2* (does not accept PIN as decryption key). -->
-    <!-- That means it is not possible to push the file to user-writable `/sdcard/` and then use TWRP to move it under root-writable `/system/` because *TWRP* cannot read `/sdcard/`. -->
-    <!--  -->
-    <!-- ### Case 1: Device is not encrypted -->
-    <!--  -->
-    <!-- If your device is not encrypted, you can just push the file to the user-writable `/sdcard/` system storage, like so: -->
-    <!--  -->
-    <!-- ``` -->
-    <!-- $ adb push gps.conf /sdcard/gps.conf -->
-    <!-- ``` -->
-    <!--  -->
-    <!-- ... and then reboot into *TWRP* and move the file to its proper place at root-writable `/system/etc/gps.conf` via *Advanced -> File Manager*. -->
-    <!--  -->
-    <!-- ### Case 2: Device is encrypted -->
-    <!--  -->
-    <!-- If there is a user-writable section outside `/sdcard/`, you can use that to `adb push`. I could not find it. -->
-    <!-- So I chose these steps: -->
-    <!--  -->
-    <!-- 1. Copy `gps.conf` to external SD card. -->
-    <!-- 2. Put external SD card into device and reboot into *TWRP*. -->
-    <!-- 3. Move the file to `/system/etc/gps.conf` via *Advanced -> File Manager*. -->
+      <!-- <p> -->
+      <!--   Minimal Computing, Computational Linguistics and some Space Piracy -->
+      <!-- </p> -->
+      </nav>
+      <article>
+  <header>
+        <p class="center">
+      <a href="..">De-Googling Lineage OS 18.1</a>
+    </p>
+    <h1 class="center">
+      <a href=".">SUPL for A-GPS</a>
+    </h1>
+            <p class="center">
+            <span class="tag">Privacy</span>    </p>
+            <p class="last_update center">
+      Updated: <time>09.09.2021</time>
+    </p>
+      </header>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Rooted system</li>
+<li>Ability to open the command line on a *nix machine.</li>
+<li>Android Debuge Bridge (ADB) set up on a host machine</li>
+<li>Device connected to that host machine</li>
+</ul>
+<hr />
+<p>From a handy <a href="https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/">Reddit post</a>:</p>
+<blockquote>
+<p>LineageOS defaults to <code>supl.google.com</code> for SUPL data, which helps in speeding up device positioning (aka TTFF) when using A-GPS, but each request to server is accompanied by device’s IMEI.</p>
+</blockquote>
+<p>In other words, each time your device requests its GPS position, it sends a unique identifier to Google’s servers along with its location.</p>
+<p>If you are willing to trade quick GPS positioning for privacy, follow these steps.</p>
+<p>On your host machine, restart <code>adb</code> as root:</p>
+<pre><code>$ adb root</code></pre>
+<p>Re-mount root as read-write:</p>
+<pre><code>$ adb shell mount -o rw,remount /</code></pre>
+<p>Log into the device shell:</p>
+<pre><code>$ adb shell</code></pre>
+<p>Open the GPS configuration file for editing:</p>
+<pre><code>$ nano /etc/gps.conf</code></pre>
+<p>Now change some entries.</p>
+<p>You may want to change <code>NTP_SERVER</code> to a European one:</p>
+<pre><code>NTP_SERVER=europe.pool.ntp.org</code></pre>
+<p>Change <code>SUPL_HOST</code> from the Google default to localhost:</p>
+<pre><code>SUPL_HOST=localhost</code></pre>
+<p>Leave the <code>SUPL_PORT</code> entry untouched, whether it is commented out or not.</p>
+<p>Save and close the editor by pressing <code>CTRL+X</code> and <code>Y</code>.</p>
+<p>Exit back on the host machine and re-mount root as read-only:</p>
+<pre><code>$ adb shell mount -o ro,remount /</code></pre>
+<p>Reboot your device, e.g. via:</p>
+<pre><code>$ adb reboot</code></pre>
+<p><strong>NOTE</strong>: After some months, I found this setting to be reset to default. My best guess is that some system update overwrote the configuration file.</p>
+<p>For more information about the privacy aspects of A-GPS, refer to:</p>
+<ul>
+<li><a href="https://blog.wirelessmoves.com/2014/08/supl-reveals-my-identity-and-location-to-google.html" class="uri">https://blog.wirelessmoves.com/2014/08/supl-reveals-my-identity-and-location-to-google.html</a></li>
+<li><a href="https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/" class="uri">https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/</a> (German)</li>
+</ul>
+<!--  -->
+<!-- ``` -->
+<!-- $ adb pull /system/etc/gps.conf -->
+<!-- ``` -->
+<!--  -->
+<!--  -->
+<!-- The edited `gps.conf` has to be copied from your host system back to `/system/etc/gps.conf`, somehow. -->
+<!--  -->
+<!-- *TWRP* does not seem to be able to decrypt an encrypted `/sdcard/` system storage (PIN-protected), at least through version *3.5.2* (does not accept PIN as decryption key). -->
+<!-- That means it is not possible to push the file to user-writable `/sdcard/` and then use TWRP to move it under root-writable `/system/` because *TWRP* cannot read `/sdcard/`. -->
+<!--  -->
+<!-- ### Case 1: Device is not encrypted -->
+<!--  -->
+<!-- If your device is not encrypted, you can just push the file to the user-writable `/sdcard/` system storage, like so: -->
+<!--  -->
+<!-- ``` -->
+<!-- $ adb push gps.conf /sdcard/gps.conf -->
+<!-- ``` -->
+<!--  -->
+<!-- ... and then reboot into *TWRP* and move the file to its proper place at root-writable `/system/etc/gps.conf` via *Advanced -> File Manager*. -->
+<!--  -->
+<!-- ### Case 2: Device is encrypted -->
+<!--  -->
+<!-- If there is a user-writable section outside `/sdcard/`, you can use that to `adb push`. I could not find it. -->
+<!-- So I chose these steps: -->
+<!--  -->
+<!-- 1. Copy `gps.conf` to external SD card. -->
+<!-- 2. Put external SD card into device and reboot into *TWRP*. -->
+<!-- 3. Move the file to `/system/etc/gps.conf` via *Advanced -> File Manager*. -->
 </article>
 <hr>
 <hr>
 
-            <footer>
-                <small>
-                    <p class="author">
-                    By David Kaumanns, Ph.D.
-                    </p>
-                    <p>
-                        Throw me a wrench via:
-                        <ul>
-                            <li>
-                                Email: david [ätt] kaumanns.io
-                                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
-                            </li>
-                            <li>
-                                Matrix: @mael:hackbrettl.de
-                            </li>
-                            <li>
-                                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
-                            </li>
-                        </ul>
-                    </p>
-                    <hr>
-                    <p>
-                    This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
-                        and is served by a Raspberry Pi 3.
-                        The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
-                    </p>
-                    <p>
-                        All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
-                    </p>
-                    <p>
-                        All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-                        <br />
-                        <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
-                            <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
-                        </a>
-                    <p>
-                </small>
-            </footer>
-        </main>
-	</body>
+      <footer>
+        <small>
+          <p class="author">
+            By David Kaumanns, Ph.D.
+          </p>
+          <p>
+            Throw me a wrench via:
+            <ul>
+              <li>
+                Email: david [ätt] kaumanns.io
+                (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/83B21DD6874CED29DE990531235B047EF5F74CB5">PGP-Key</a>)
+              </li>
+              <li>
+                Matrix: @mael:hackbrettl.de
+              </li>
+              <li>
+                Github: <a href="https://github.com/kaumanns">github.com/kaumanns</a>
+              </li>
+            </ul>
+          </p>
+          <hr>
+          <p>
+            This site was created with my own <a href="https://github.com/kaumanns/no-static-site-generator">no-static-site-generator</a>
+            and is served by a Raspberry Pi 3.
+            The stylesheet is inspired by <a href="https://bettermotherfuckingwebsite.com">bettermotherfuckingwebsite.com</a>.
+          </p>
+          <p>
+            All code is licensed under <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.
+          </p>
+          <p>
+            All other content is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+            <br />
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+              <img alt="Creative Commons License" style="border-width:0" src="/creative_commons.png" />
+            </a>
+          <p>
+        </small>
+      </footer>
+    </main>
+  </body>
 </html>

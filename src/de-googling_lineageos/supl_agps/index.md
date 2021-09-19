@@ -16,13 +16,13 @@ tags:
 
 ---
 
-From a handy (Reddit post)[https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/]:
+From a handy [Reddit post](https://www.reddit.com/r/LineageOS/comments/cl5c90/degoogling_lineageos_instructions_august_2019/):
 
 > LineageOS defaults to `supl.google.com` for SUPL data, which helps in speeding up device positioning (aka TTFF) when using A-GPS, but each request to server is accompanied by device's IMEI.
 
 In other words, each time your device requests its GPS position, it sends a unique identifier to Google's servers along with its location.
 
-If you are willing to trade quick GPS positioning for privacy, follow the steps below.
+If you are willing to trade quick GPS positioning for privacy, follow these steps.
 
 On your host machine, restart `adb` as root:
 
@@ -83,7 +83,7 @@ $ adb reboot
 For more information about the privacy aspects of A-GPS, refer to:
 
 - <https://blog.wirelessmoves.com/2014/08/supl-reveals-my-identity-and-location-to-google.html>
-- (German) <https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/>
+- <https://www.kuketz-blog.de/android-imsi-leaking-bei-gps-positionsbestimmung/> (German)
 
 
 <!--  -->

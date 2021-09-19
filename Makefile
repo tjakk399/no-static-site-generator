@@ -49,6 +49,8 @@ $(PANDOC) \
 	--email-obfuscation=references
 endef
 
+title_key_from_text_file = $(shell cat "$1" | grep "title:" | perl -ne 'chomp; s/"/\\"/g; /title:\s*(.*)$$/; print $$1')
+
 ################################################################################
 # Definitions
 
@@ -88,6 +90,7 @@ sync:
 				) \
 		| $(call html_from_body, \
 				$(word 3, $^) \
+				"$(call title_key_from_text_file,$<)" \
 				) \
 		> $@
 

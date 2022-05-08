@@ -3,7 +3,7 @@
 
 # Attribute marker used to denote source files for conversion
 ATTR_MARK = to-
-RSYNC_EXCLUDES += *.@$(ATTR_MARK)*
+# RSYNC_EXCLUDES += *.@$(ATTR_MARK)*
 
 # Attribute for monochrome images
 ATTR_MONOCHROME = monochrome

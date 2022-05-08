@@ -21,12 +21,15 @@ TEMPLATE_ARTICLE = article.template.html
 TEMPLATE_INDEX = index.template.html
 
 # Remote directory for sync
-DESTINATION =  pi@192.168.178.39:/var/www/html/kaumanns.io
+DESTINATION =  david@192.168.178.39:/var/www/html/kaumanns.io
 
-DIR_SOURCE = src
+DIR_SOURCE = src/
 EXT_SOURCE = md
 
 RSYNC_EXCLUDES = *.$(EXT_SOURCE)
+
+AUTHOR = David Kaumanns
+UPDATED = $(shell date +"%d.%m.%Y")
 
 ################################################################################
 # Includes
@@ -46,8 +49,19 @@ $(PANDOC) \
 	--to html \
 	--template $(1) \
 	--variable url="$(2)" \
-	--email-obfuscation=references
+	--mathjax \
+	--shift-heading-level-by=-1 \
+  --number-sections \
+  --table-of-contents \
+  --variable=updated:"$(UPDATED)" \
+	--variable=author:"$(AUTHOR)" \
+  --metadata=autoEqnLabels \
+	--filter pandoc-crossref \
+	--email-obfuscation=references \
+	--highlight-style breezedark
 endef
+
+# --filter pandoc-eqnos \
 
 title_key_from_text_file = $(shell cat "$1" | grep "title:" | perl -ne 'chomp; s/"/\\"/g; /title:\s*(.*)$$/; print $$1')
 
@@ -68,7 +82,10 @@ target_images_monochrome = $(subst @$(ATTR_MARK),@,$(source_images_monochrome))
 default: site
 
 # Compile site.
-site: $(target_files) $(target_images_monochrome)
+site: $(target_files) $(target_images_monochrome) | Makefile
+
+src/favicon.ico: src/logo.png
+	magick -density 128x128 -background none $< -resize 128x128 $@
 
 # Synchronize local with remote.
 sync:
@@ -78,7 +95,7 @@ sync:
 		--compress \
 		--recursive \
 		$(foreach exclude,$(RSYNC_EXCLUDES),--exclude '$(exclude)') \
-		$(DIR_SOURCE)/* \
+		$(DIR_SOURCE) \
 		$(DESTINATION)
 
 # Convert Pandoc/Markdown files to full HTML each.

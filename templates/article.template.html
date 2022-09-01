@@ -2,10 +2,10 @@
   <header>
     $if(subtitle)$
     <p class="center">
-      <a href="..">$title$</a>
+      <a href="..">$subtitle$</a>
     </p>
     <h1 class="center">
-      <a href=".">$subtitle$</a>
+      <a href=".">$title$</a>
     </h1>
     $elseif(title)$
     <h1 class="title center">
@@ -15,13 +15,13 @@
     $if(tags)$
     <p class="center">
       $for(tags)$
-      <span class="tag">$tags$</span>$sep$
+      <span class="tag $tags$">$tags$</span>
       $endfor$
     </p>
     $endif$
-    $if(last-update)$
+    $if(updated)$
     <p class="last_update center">
-      Updated: <time>$last-update$</time>
+      Updated: <time>$updated$</time>
     </p>
     $endif$
   </header>

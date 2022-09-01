@@ -20,6 +20,17 @@ Only if that response code is delivered will your device connect to the internet
 
 Let's remove Google from this equation.
 
+**Note**: This is one of the weirder de-Googling tweaks.
+I always use it together with blocking `connectivitycheck.gstatic.com` (via *AdAway*) to make sure that I catch errors, and this is what I experience:
+
+- Sometimes these tweaks cause the "x" symbol to appear with the Wi-Fi/LTE symbols, and sometimes internet works nevertheless, and sometimes it actually does not.
+- Sometimes (?), disabling Captive Portal nullifies the alternative server settings, and vice versa.
+- Any setting is reversed after installing an upgrade (see below).
+
+I am still in the process of figuring out how to handle this permanently.
+Until then, I recommend disabling Captive Portal check completely and see if it causes any trouble.
+
+
 ### Change Captive Portal settings
 
 From a host machine (connected via USB), execute the following commands with *adb*.
@@ -45,6 +56,15 @@ $ adb shell 'settings put global captive_portal_fallback_url "http://captiveport
 $ adb shell 'settings put global captive_portal_other_fallback_urls "http://captiveportal.kuketz.de"'
 ```
 
+Check respectively with:
+
+```
+$ adb shell 'settings get global captive_portal_http_url'
+$ adb shell 'settings get global captive_portal_https_url'
+$ adb shell 'settings get global captive_portal_fallback_url'
+$ adb shell 'settings get global captive_portal_other_fallback_urls'
+```
+
 <!-- ```{.shell} -->
 <!-- # settings put global captive_portal_http_url "http://captiveportal.kuketz.de" -->
 <!-- # settings put global captive_portal_https_url "https://captiveportal.kuketz.de" -->
@@ -54,13 +74,17 @@ $ adb shell 'settings put global captive_portal_other_fallback_urls "http://capt
 
 Reboot.
 
+<!-- **Note**: These settings seem to revert back to default by themselves after some days (?). -->
+<!-- I have not yet figured out what is going on, so make sure to check these settings after some time to make sure they are still enabled. -->
+
 
 ##### Edit *AFWall+* settings
 
 Your *AFWall+* may block the system service responsible for the Captive Portal check.
-As a result, your internet connection is disabled.
+As a result, your internet connection is disabled by the system.
+Do not ask why because only Google knows.
 
-The easiest solution is to just whiteliste the service `Dynamic System Updates, Android System, Setup Wizard, [...]`.
+The easiest solution is to just whitelist the service `Dynamic System Updates, Android System, Setup Wizard, [...]`.
 This worked for me, but it also allows a range of unrelated services to phone home.
 
 [Kuketz](https://www.kuketz-blog.de/empfehlungsecke/#captive-portal) suggests expanding the custom script with:
@@ -80,12 +104,20 @@ Try it out.
 
 This option may cause problems with Wi-Fi login forms, but it may be worth a try.
 
-**Note**: After a couple days, this caused my Wi-Fi-connection to be stuck in a "log in to connect" request, indicated by a grey symbol symbol and the dreaded "x" tag. No idea why. I reverted to option 1.
+**Note**: After a couple days, this caused my Wi-Fi-connection to be stuck in a "log in to connect" request, indicated by a grey Wi-Fi symbol and the dreaded "x" tag. No idea why. I reverted to option 1.
 
 ```
 $ adb shell 'settings put global captive_portal_detection_enabled 0'
 $ adb shell 'settings put global captive_portal_server localhost'
 $ adb shell 'settings put global captive_portal_mode 0'
+```
+
+Check respectively with:
+
+```
+$ adb shell 'settings get global captive_portal_detection_enabled'
+$ adb shell 'settings get global captive_portal_server'
+$ adb shell 'settings get global captive_portal_mode'
 ```
 
 <!-- ``` -->

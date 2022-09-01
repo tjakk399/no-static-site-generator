@@ -22,3 +22,15 @@ It is a good idea to at least block the most widely known bad actors.
 [AdAway](https://f-droid.org/en/packages/org.adaway/) is the app to go.
 Given root access, you can configure it to your desire, e.g. by enabling and adding block lists.
 
+It makes sense to install an anti-Google blocklist, such as <https://raw.githubusercontent.com/jmdugan/blocklists/master/corporations/google/all>.
+Add the raw link to the list of hosts sources.
+
+Plus, **after you performed the de-Googling changes in the other sections of this guide**, you may want to make sure that the original target URLs are never reachable.
+Adding them to the blacklist:
+
+```
+north-america.pool.ntp.org
+supl.google.com
+connectivitycheck.gstatic.com
+time.android.com
+```

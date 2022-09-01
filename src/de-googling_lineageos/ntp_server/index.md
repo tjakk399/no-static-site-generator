@@ -24,20 +24,21 @@ See:
 I could not verify this claim via `grep -Rl / -e 'time.android.com' 2>/dev/null` as root on the device
 which leads me to believe that this setting moved into AOSP source code.
 
-According to (this fella)[https://gist.github.com/xujiaao/63cb3bbea9fe22e79206e5eb7ba82d0e] on Github,
+According to [this fella](https://gist.github.com/xujiaao/63cb3bbea9fe22e79206e5eb7ba82d0e) on Github,
 the NTP server on an unspecified version of *Android Things* can be changed by setting a global variable.
 For me, this variable was `null` prior to setting it, so there is no indication Android actually respects this variable.
 
 If you want to give it a whirl, run these commands on a host machine with the device connected via USB:
 I chose an alternative NTP server from <https://www.ntppool.org>:
 
-```
+``` {.bash .numberLines}
 $ adb shell 'settings put global ntp_server 2.europe.pool.ntp.org'
 ```
 
 Check
 
-```
+``` {.bash .numberLines}
 $ adb shell 'settings get global ntp_server'
 ```
 
+**Note**: This setting was suddently reverted. Not sure yet if it was connected to a system upgrade. Make sure it is still set after system upgrade.

@@ -56,11 +56,24 @@ You may want to change `NTP_SERVER` to a European one:
 NTP_SERVER=europe.pool.ntp.org
 ```
 
-Change `SUPL_HOST` from the Google default to localhost:
+Change the URL in `SUPL_HOST` from the Google default to a different one.
+
+If you want to simply disable the lookup, change it to `localhost`:
 
 ```
 SUPL_HOST=localhost
 ```
+
+For me, this has been working well enough.
+
+You can also specify a working host URL, such as this one from Germany:
+
+```
+SUPL_HOST=supl.vodafone.com
+```
+
+Note that using a different host just shifts your trust to a different provider.
+If you want to go that route, do your research.
 
 Leave the `SUPL_PORT` entry untouched, whether it is commented out or not.
 

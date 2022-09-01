@@ -1,6 +1,6 @@
 ---
 title: De-Googling LineageOS 18.1
-last-update: 09.09.2021
+last-update: 03.11.2021
 author: David Kaumanns
 tags:
   - Privacy
@@ -17,6 +17,10 @@ Google is still nosing around, though, so it needs a few tweaks before you can c
 This is a comprehensive step-by-step guide to do so.
 Part of it is an English translation of the excellent [Kuketz-Blog](https://www.kuketz-blog.de/android-ohne-google-take-back-control-teil1/) (German).
 
+If you follow the steps below on a vanilla *LineageOS 18.1* without MicroG, you will achieve feature parity with [/e/OS](https://doc.e.foundation/what-s-e#degoogling--ungoogling).
+Check out their whitepaper regarding details.
+
+
 ### Content
 
 1. [High-Level System Settings](system_settings)
@@ -30,7 +34,7 @@ Part of it is an English translation of the excellent [Kuketz-Blog](https://www.
   - [Captive Portal Server](captive_portal_server)
   - [Network Time Protocol (NTP) Server](ntp_server)
   - [SUPL for A-GPS](supl_agps)
-  - Replace AOSP Chromium Webview engine with *Bromite* (TODO)
+  - [WebView with *Bromite*](webview)
 
 ### Requirements
 
@@ -40,7 +44,7 @@ Part of it is an English translation of the excellent [Kuketz-Blog](https://www.
 2. [LineageOS 18.1 installed](https://wiki.lineageos.org/devices/)
 3. ... and [rooted with *Magisk*](/rooting_lineageos)
 4. Developer mode enabled by tapping build number 7 times in *Settings -> About phone -> Build number*)
-5. Options enabled in *Settings -> System -> Developer options*:
+5. Options enabled in *Settings -> System -> Advances -> Developer options*:
   - *USB debugging*
   - *Rooted debugging*
 

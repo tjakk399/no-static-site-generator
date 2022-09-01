@@ -3,7 +3,7 @@ title: Rooting LineageOS 18.1  with Magisk
 last-update: 13.09.2021
 author: David Kaumanns
 tags:
-  - Linux
+  - Minimal Computing
 ---
 
 Rooting Lineage OS with *Magisk* is necessary if you want to use privacy power apps such as *AdAway* (host blocker) and *AFWall+* (firewall).
@@ -86,7 +86,7 @@ The device is now in fastboot mode.
 ... onto the device:
 
 ```{.bash}
-$ sudo fastboot flash boot magisk_patched-23000_uNQ1H.img
+$ sudo fastboot flash boot magisk_patched-23000_*.img
 [sudo] password for david:
 Sending 'boot' (6974 KB)                           OKAY [  0.313s]
 Writing 'boot'                                     OKAY [  0.186s]

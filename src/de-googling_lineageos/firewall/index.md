@@ -18,7 +18,7 @@ Depending on the apps you use, this activity may send all kinds of data to Googl
 
 Android's user settings are cumbersome to maintain and do not allow low-level system services to be restricted.
 
-Coming the rescue, [AFWall+](https://f-droid.org/en/packages/dev.ukanth.ufirewall/) is a firewall that works with the system's iptables, hence the root requirement.
+[AFWall+](https://f-droid.org/en/packages/dev.ukanth.ufirewall/) is a firewall that modifies the system's `iptables`, hence the root requirement.
 It allows you to precisely control which apps, including system-level services, get access to which internet connection interface, e.g. Wi-Fi, mobile, VPN, roaming, etc.
 
 [Kuketz](https://www.kuketz-blog.de/afwall-digitaler-tuervorsteher-take-back-control-teil4/) (German) describes *AFWall+*'s usage in detail, though the interface is pretty self-explanatory.

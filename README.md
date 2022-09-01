@@ -10,6 +10,13 @@ You know and use [Pandoc](https://pandoc.org/)?
 
 Then this is for you.
 
+---
+
+Tested with:
+
+- Linux, Mac
+- GNU Make 4.3 (**NOTE**: MacOS's built-in make does not suffice. You need to install GNU Make as `gmake` and use that instead.)
+
 ## Setup
 
 Clone this repository.
@@ -20,6 +27,12 @@ Install:
 - pandoc-crossref
 - pandoc-xnos
 - ImageMagick (optional)
+
+Tip: the Pandoc filters can be installed as such:
+
+```
+$ pip install pandoc-xnos pandoc-crossref
+```
 
 ## Usage
 

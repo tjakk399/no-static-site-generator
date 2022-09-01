@@ -21,15 +21,20 @@ TEMPLATE_ARTICLE = article.template.html
 TEMPLATE_INDEX = index.template.html
 
 # Remote directory for sync
-DESTINATION =  david@192.168.178.39:/var/www/html/kaumanns.io
+HOST_USER = my_host_user
+HOST_NAME = my_host_name.tld
+HOST_DIR = my_host_dir
+HOST_PORT = 22
+
+DESTINATION = $(HOST_USER)@$(HOST_NAME):$(HOST_DIR)
 
 DIR_SOURCE = src/
 EXT_SOURCE = md
 
 RSYNC_EXCLUDES = *.$(EXT_SOURCE)
 
-AUTHOR = David Kaumanns
-UPDATED = $(shell date +"%d.%m.%Y")
+AUTHOR = Arthur McArthurface
+UPDATED = $(shell date +"%Y-%m-%d")
 
 ################################################################################
 # Includes
@@ -51,17 +56,15 @@ $(PANDOC) \
 	--variable url="$(2)" \
 	--mathjax \
 	--shift-heading-level-by=-1 \
-  --number-sections \
-  --table-of-contents \
-  --variable=updated:"$(UPDATED)" \
+	--table-of-contents \
+	--variable=updated:"$(UPDATED)" \
 	--variable=author:"$(AUTHOR)" \
-  --metadata=autoEqnLabels \
+	--metadata=autoEqnLabels \
+	--filter pandoc-xnos \
 	--filter pandoc-crossref \
 	--email-obfuscation=references \
 	--highlight-style breezedark
 endef
-
-# --filter pandoc-eqnos \
 
 title_key_from_text_file = $(shell cat "$1" | grep "title:" | perl -ne 'chomp; s/"/\\"/g; /title:\s*(.*)$$/; print $$1')
 
@@ -94,12 +97,13 @@ sync:
 		--verbose \
 		--compress \
 		--recursive \
+		-e 'ssh -p $(HOST_PORT)' \
 		$(foreach exclude,$(RSYNC_EXCLUDES),--exclude '$(exclude)') \
 		$(DIR_SOURCE) \
 		$(DESTINATION)
 
 # Convert Pandoc/Markdown files to full HTML each.
-%.html: %.$(EXT_SOURCE) $(TEMPLATE_ARTICLE) $(TEMPLATE_INDEX)
+%.html: %.$(EXT_SOURCE) $(TEMPLATE_ARTICLE) $(TEMPLATE_INDEX) Makefile
 	cat $< \
 		| $(call body_from_markdown, \
 				$(word 2, $^), \

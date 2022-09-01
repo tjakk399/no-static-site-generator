@@ -17,6 +17,8 @@ Clone this repository.
 Install:
 
 - [Pandoc](https://pandoc.org/)
+- pandoc-crossref
+- pandoc-xnos
 - ImageMagick (optional)
 
 ## Usage
@@ -35,7 +37,6 @@ Example:
 ```
 ---
 title: Fancy title
-last-update: 31.12.1999
 author: Joe Schmoe
 tags:
   - Taggy
@@ -48,14 +49,16 @@ tags:
 This command compiles all Pandoc files in `src` to HTML files, using the specified templates:
 
 ```
-make site TEMPLATE_ARTICLE=<HTML template for article> TEMPLATE_INDEX=<HTML template for full HTML>
+make site \
+    AUTHOR="Arthur McAuthorface" \
+    TEMPLATE_ARTICLE=<HTML template for article> \
+    TEMPLATE_INDEX=<HTML template for full HTML>
 ```
 
 1. `TEMPLATE_ARTICLE` wraps the content of the Pandoc file and yields raw HTML markup with `<article>` as the top element, followed by...
 2. `TEMPLATE_INDEX`, yielding the complete servable HTML.
 
-Look into the `templates` directory for example templates.
-They are used as defaults.
+The `templates` directory contains default templates.
 
 
 #### Optional: mark images for conversion to monochrome
@@ -85,15 +88,12 @@ Pandoc source files (and original images, see above) are excluded automatically.
 
 Call:
 
-
 ```
-make sync DESTINATION=<URL>
-```
-
-`DESTINATION` points to your server's `www/html` directory, e.g.:
-
-```
-make sync DESTINATION=pi@192.168.178.39:/var/www/html/mywebsite.org
+make sync \
+    HOST_USER="<my_host_user>" \
+    HOST_NAME="<my_host_name>" \
+    HOST_DIR="<my_host_dir>" \
+    HOST_PORT="<my_host_port_number>" 
 ```
 
 ## License

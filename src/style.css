@@ -21,6 +21,10 @@ nav {
     font-size: 16px;
 }
 
+.citation {
+    color: Gray;
+}
+
 article,footer {
   margin: 40px 10px 40px 10px;
 }
@@ -84,6 +88,11 @@ figure img {
   background:    #002b36;
   color:         #fdf6e3;
   padding:       10px;
+}
+
+.csl-entry {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* .eqnos { display: inline-block; position: relative; width: 100%; } */

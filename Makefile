@@ -16,6 +16,8 @@ vpath %.template.html templates/
 ################################################################################
 # Constants
 
+BIBTEX = src/literature.bib
+
 # HTML templates
 TEMPLATE_ARTICLE = article.template.html
 TEMPLATE_INDEX = index.template.html
@@ -33,7 +35,7 @@ EXT_SOURCE = md
 
 RSYNC_EXCLUDES = *.$(EXT_SOURCE)
 
-AUTHOR = Arthur McArthurface
+AUTHOR = Arthur McAuthorface
 UPDATED = $(shell date +"%Y-%m-%d")
 
 ################################################################################
@@ -48,22 +50,9 @@ html_from_body = tools/html_from_template.pl $(1)
 
 url = $(notdir $(basename $(1))).html
 
+NUMBER_SECTIONS ?=
+
 define body_from_markdown =
-$(PANDOC) \
-	--from markdown \
-	--to html \
-	--template $(1) \
-	--variable url="$(2)" \
-	--mathjax \
-	--shift-heading-level-by=-1 \
-	--table-of-contents \
-	--variable=updated:"$(UPDATED)" \
-	--variable=author:"$(AUTHOR)" \
-	--metadata=autoEqnLabels \
-	--filter pandoc-xnos \
-	--filter pandoc-crossref \
-	--email-obfuscation=references \
-	--highlight-style breezedark
 endef
 
 title_key_from_text_file = $(shell cat "$1" | grep "title:" | perl -ne 'chomp; s/"/\\"/g; /title:\s*(.*)$$/; print $$1')
@@ -85,7 +74,7 @@ target_images_monochrome = $(subst @$(ATTR_MARK),@,$(source_images_monochrome))
 default: site
 
 # Compile site.
-site: $(target_files) $(target_images_monochrome) | Makefile
+site: $(target_files) $(target_images_monochrome)
 
 src/favicon.ico: src/logo.png
 	magick -density 128x128 -background none $< -resize 128x128 $@
@@ -103,15 +92,27 @@ sync:
 		$(DESTINATION)
 
 # Convert Pandoc/Markdown files to full HTML each.
-%.html: %.$(EXT_SOURCE) $(TEMPLATE_ARTICLE) $(TEMPLATE_INDEX) Makefile
+%.html: %.$(EXT_SOURCE) $(TEMPLATE_INDEX) Makefile $(BIBTEX) tools/anchor-links.lua $(wildcard templates/*.html)
 	cat $< \
-		| $(call body_from_markdown, \
-				$(word 2, $^), \
-				$(call url, $<) \
-				) \
-		| $(call html_from_body, \
-				$(word 3, $^) \
-				"$(call title_key_from_text_file,$<)" \
-				) \
+		| $(PANDOC) \
+			--from markdown \
+			--to html \
+			--standalone \
+			--template $(word 2, $^) \
+			--variable=author:"$(AUTHOR)" \
+			--variable=updated:"$(UPDATED)" \
+			--metadata=autoEqnLabels \
+			--metadata=link-citations \
+			--metadata=link-bibliography \
+			--highlight-style breezedark \
+			--mathjax \
+			--section-divs \
+			--table-of-contents \
+			--email-obfuscation=references \
+			--filter pandoc-xnos \
+			--filter pandoc-crossref \
+			--citeproc \
+			--bibliography src/literature.bib \
+			--lua-filter ./tools/anchor-links.lua \
+			$(if $(NUMBER_SECTIONS),--number-sections --number-offset 1) \
 		> $@
-

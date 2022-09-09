@@ -1,0 +1,38 @@
+  <header>
+  $if(subtitle)$
+    <h1 class="center">
+      <a href=".">$title$</a>
+    </h1>
+    <p class="center">
+      $subtitle$
+    </p>
+  $elseif(title)$
+    <h1 class="title center">
+      <a href=".">$title$</a>
+    </h1>
+  $endif$
+
+  $if(tags)$
+    <p class="center">
+      $for(tags)$
+      <span class="tag $tags$">$tags$</span>
+      $endfor$
+    </p>
+  $endif$
+
+    <div id="created" class="center">
+      $if(lang)$
+        Created: <time datetime="$created$">$created$</time>
+      $endif$
+      $if(updated)$
+        Updated: <time datetime="$updated$">$updated$</time>
+      $endif$
+    </div>
+
+  $if(table-of-contents)$
+    <div id="table-of-contents">
+      $table-of-contents$
+    </div>
+  $endif$
+  </header>
+$body$

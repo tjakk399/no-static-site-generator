@@ -33,7 +33,7 @@ DESTINATION = $(HOST_USER)@$(HOST_NAME):$(HOST_DIR)
 DIR_SOURCE = src/
 EXT_SOURCE = md
 
-RSYNC_EXCLUDES = *.$(EXT_SOURCE)
+RSYNC_EXCLUDES = *.$(EXT_SOURCE) *.dot *.uml.txt
 
 AUTHOR = Arthur McAuthorface
 UPDATED = $(shell date +"%Y-%m-%d")

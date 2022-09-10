@@ -6,6 +6,10 @@ body {
   margin:      0px auto;
   max-width:   800px;
   padding:     0 10px
+  hyphens: auto;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
 }
 
 h1,h2,h3 {
@@ -36,17 +40,6 @@ a {
 
 a:hover {
   color: Blue;
-}
-
-pre {
-  background:    #002b36;
-  border-radius: 6px;
-  color:         #fdf6e3;
-  counter-reset: line;
-  display:       block;
-  overflow:      auto;
-  padding:       10px;
-  tab-size:      2;
 }
 
 blockquote {
@@ -93,6 +86,22 @@ figure img {
 .csl-entry {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#table-of-contents li {
+  list-style: none;
+}
+
+#table-of-contents ul {
+  padding-left: 1.3em;
+}
+
+#table-of-contents > ul {
+  padding-left: 0;
+}
+
+#table-of-contents a:not(:hover) {
+  text-decoration: none;
 }
 
 /* .eqnos { display: inline-block; position: relative; width: 100%; } */

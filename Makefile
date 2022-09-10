@@ -104,13 +104,15 @@ sync:
 			--metadata=autoEqnLabels \
 			--metadata=link-citations \
 			--metadata=link-bibliography \
-			--highlight-style breezedark \
+			--highlight-style src/solarizeddark.theme \
 			--mathjax \
 			--section-divs \
 			--table-of-contents \
 			--email-obfuscation=references \
 			--filter pandoc-xnos \
 			--filter pandoc-crossref \
+			--filter pandoc-include-code \
+			--metadata=base:src/algorithms_and_complexities
 			--citeproc \
 			--bibliography src/literature.bib \
 			--lua-filter ./tools/anchor-links.lua \

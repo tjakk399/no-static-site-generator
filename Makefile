@@ -38,6 +38,14 @@ RSYNC_EXCLUDES = *.$(EXT_SOURCE)
 AUTHOR = Arthur McAuthorface
 UPDATED = $(shell date +"%Y-%m-%d")
 
+DIAGRAM_SRCS = $(shell find src -name "*.dot")
+DIAGRAMS = $(DIAGRAM_SRCS:%.dot=%.png)
+
+UML_SRCS = $(shell find src -name "*.uml.txt")
+UMLS = $(UML_SRCS:%.uml.txt=%.png)
+
+PLANTUML = tools/plantuml.jar
+
 ################################################################################
 # Includes
 
@@ -73,11 +81,34 @@ target_images_monochrome = $(subst @$(ATTR_MARK),@,$(source_images_monochrome))
 
 default: site
 
+images: $(DIAGRAMS) $(UMLS)
+
 # Compile site.
-site: $(target_files) $(target_images_monochrome)
+site: $(target_files) $(target_images_monochrome) $(DIAGRAMS) $(UMLS)
 
 src/favicon.ico: src/logo.png
 	magick -density 128x128 -background none $< -resize 128x128 $@
+
+# Graphviz
+%.png: %.dot
+	dot \
+		-Tpng \
+		$< \
+		-o $@
+
+# PlantUML
+%.png: %.uml.txt $(PLANTUML)
+	mkdir -p $(shell dirname $@)
+	cat $< \
+		| java \
+			-jar $(PLANTUML) \
+			-tpng \
+			-pipe \
+		> $@
+
+$(PLANTUML):
+	mkdir -p $(shell dirname $@)
+	wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O $@
 
 # Synchronize local with remote.
 sync:
@@ -112,7 +143,6 @@ sync:
 			--filter pandoc-xnos \
 			--filter pandoc-crossref \
 			--filter pandoc-include-code \
-			--metadata=base:src/algorithms_and_complexities
 			--citeproc \
 			--bibliography src/literature.bib \
 			--lua-filter ./tools/anchor-links.lua \

@@ -17,6 +17,19 @@ h1,h2,h3 {
   margin-top: 40px;
 }
 
+/* There should be no h1 under section, only h2 but an open pandoc issue blocks this: https://github.com/jgm/pandoc/issues/5071 */
+section > h1 {
+  font-size: 1.6em;
+}
+
+h2 {
+  font-size: 1.4em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
 nav {
   margin: 40px 0px 40px 0px;
 }
@@ -43,7 +56,7 @@ a:hover {
 }
 
 blockquote {
-  background:    Gainsboro;
+  background:    AliceBlue;
   border-radius: 6px;
   counter-reset: line;
   display:       block;
@@ -61,8 +74,6 @@ figure img {
   display:      block;
   margin-left:  auto;
   margin-right: auto;
-  max-width:    400px;
-  width:        75%;
 }
 
 .tag {
@@ -111,21 +122,32 @@ figure img {
 table {
   /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
   border-collapse: collapse;
+  caption-side: bottom;
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+thead {
+    border-bottom: 1px solid;
 }
 
 thead tr {
-  background: gainsboro;
+  background: AliceBlue;
 }
 
 td, th {
   vertical-align: top;
-  border-right: solid 1px gainsboro;
-  border-left: solid 1px gainsboro;
+  border-right: solid 1px;
+  border-left: solid 1px;
 }
 
 table tr:nth-child(even) {
-  background: gainsboro;
+  background: AliceBlue;
+}
+
+table tr:last-child {
+  border-bottom: 1px solid;
 }
 
 td:first-of-type, th:first-of-type {
@@ -142,7 +164,8 @@ td {
 }
 
 caption {
-  margin: 4px 0px 4px 0px;
+  margin: 10px 20px 0 20px;
+  text-align: left;
 }
 
 dt {
@@ -153,15 +176,16 @@ dt {
 }
 
 dd {
-  background: Gainsboro;
+  background: AliceBlue;
   padding: 5px;
+  margin-left: 0;
 }
 
 /* ------ */
 /* Topics */
 /* ------ */
 
-.tag.Critical.Social.Justice {
+.tag.Neo-Marxism {
   background: DarkRed;
 }
 

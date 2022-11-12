@@ -25,7 +25,6 @@ Install:
 
 - [Pandoc](https://pandoc.org/)
 - pandoc-crossref
-- pandoc-xnos
 - pandoc-include-code
 - [Graphviz](https://www.graphviz.org/)
 - Java Runtime (for [PlantUML](https://plantuml.com)

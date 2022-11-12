@@ -13,6 +13,19 @@ PANDOC ?= pandoc
 
 vpath %.template.html templates/
 
+default: site
+
+################################################################################
+# CPP
+
+CPP_SOURCE_FILES = $(shell find src -name "*.cpp")
+CPP_OUT_FILES = $(CPP_SOURCE_FILES:%.cpp=%.out)
+
+cpp: $(CPP_OUT_FILES)
+
+%.out: %.cpp
+	clang++ -Wall -std=c++20 $< -o $@
+
 ################################################################################
 # Constants
 
@@ -33,7 +46,7 @@ DESTINATION = $(HOST_USER)@$(HOST_NAME):$(HOST_DIR)
 DIR_SOURCE = src/
 EXT_SOURCE = md
 
-RSYNC_EXCLUDES = *.$(EXT_SOURCE) *.dot *.uml.txt
+RSYNC_EXCLUDES = *.$(EXT_SOURCE) *.dot *.uml.txt *.out
 
 AUTHOR = Arthur McAuthorface
 UPDATED = $(shell date +"%Y-%m-%d")
@@ -79,12 +92,10 @@ target_images_monochrome = $(subst @$(ATTR_MARK),@,$(source_images_monochrome))
 
 .PHONY: default clean site sync
 
-default: site
-
 images: $(DIAGRAMS) $(UMLS)
 
 # Compile site.
-site: $(target_files) $(target_images_monochrome) $(DIAGRAMS) $(UMLS)
+site: $(target_files) $(target_images_monochrome) $(DIAGRAMS) $(UMLS) $(CPP_OUT_FILES)
 
 src/favicon.ico: src/logo.png
 	magick -density 128x128 -background none $< -resize 128x128 $@
@@ -133,18 +144,21 @@ sync:
 			--variable=author:"$(AUTHOR)" \
 			--variable=updated:"$(UPDATED)" \
 			--metadata=autoEqnLabels \
+			--metadata=linkReferences \
+			--metadata=numberSections \
 			--metadata=link-citations \
 			--metadata=link-bibliography \
 			--highlight-style src/solarizeddark.theme \
 			--mathjax \
 			--section-divs \
 			--table-of-contents \
+			--toc-depth 3 \
 			--email-obfuscation=references \
-			--filter pandoc-xnos \
 			--filter pandoc-crossref \
 			--filter pandoc-include-code \
 			--citeproc \
 			--bibliography src/literature.bib \
 			--lua-filter ./tools/anchor-links.lua \
-			$(if $(NUMBER_SECTIONS),--number-sections --number-offset 1) \
+			--shift-heading-level-by=-1 \
+			$(if $(NUMBER_SECTIONS),--number-sections --number-offset 0) \
 		> $@
